@@ -8,8 +8,8 @@ declare global {
 }
 
 beforeAll(() => {
-  
-  require("./operations.js");
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("./operations.js");
 });
 
 describe("subtract", () => {
