@@ -1,25 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sum Two Numbers :) </title>
+  <title>Calculadora CI/CD</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 480px; margin: 3rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.4rem; }
+    input, select, button { font-size: 1rem; padding: .4rem; margin: .2rem 0; }
+    input { width: 7rem; }
+    #result { font-size: 1.2rem; }
+    .error { color: #b00020; }
+  </style>
 </head>
 <body>
-  <h1>Sum Two Int Numbers =) </h1>
-  <input type="number" id="num1" placeholder="First number" />
-  <span> + </span>
-  <input type="number" id="num2" placeholder="Second number" />
-  <button type="button" id="btnSum">Sum</button>
-  <p>Result: <strong id="result">—</strong></p>
+  <h1>Calculadora</h1>
 
-  <!-- Link to the compiled JS (compile sum.ts with: tsc sum.ts) -->
+  <input type="number" id="num1" placeholder="Primer número" />
+  <select id="operation">
+    <option value="sum">+</option>
+    <option value="subtract">−</option>
+    <option value="multiply">×</option>
+    <option value="divide">÷</option>
+  </select>
+  <input type="number" id="num2" placeholder="Segundo número" />
+  <button type="button" id="btnCalc">Calcular</button>
+
+  <p>Resultado: <strong id="result">—</strong></p>
+
+  <!-- JS compilado por tsc (npm run build) -->
   <script src="sum.js"></script>
+  <script src="operations.js"></script>
   <script>
-    document.getElementById('btnSum').addEventListener('click', function () {
+    document.getElementById('btnCalc').addEventListener('click', function () {
       var a = Number(document.getElementById('num1').value) || 0;
       var b = Number(document.getElementById('num2').value) || 0;
-      document.getElementById('result').textContent = sum(a, b);
+      var op = document.getElementById('operation').value;
+      var out = document.getElementById('result');
+
+      var fns = { sum: sum, subtract: subtract, multiply: multiply, divide: divide };
+
+      try {
+        out.textContent = fns[op](a, b);
+        out.className = '';
+      } catch (e) {
+        out.textContent = e.message;
+        out.className = 'error';
+      }
     });
   </script>
 </body>
